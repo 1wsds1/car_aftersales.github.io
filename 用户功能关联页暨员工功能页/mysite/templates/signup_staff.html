@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayes员工登录</title>
+    <style>
+        * {
+            margin: 100;
+            padding: 1111;
+        }
+        html, body {
+          background-color: var(--white);
+          background: url(../static/背景-员工登录.jpg);
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          display: grid;
+          height: 75vh;
+          place-items: center;
+        }
+        .login {
+            width: 358px;
+            height: 588px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color:rgba(41, 45, 62, .4);
+        }
+        .res_text {
+            color: #61dafb;
+            border-radius: 15px;
+            position: absolute;
+            height: 30px;
+            width: 250px;
+            left: 50%;
+            top: 65%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 52%;
+            margin-top: 40px;
+            }
+        .satff_text{
+            color: #61dafb;
+            border-radius: 15px;
+            position: absolute;
+            height: 30px;
+            width: 250px;
+            left: 50%;
+            top: 78%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 40%;
+            margin-top: 40px;
+
+        }
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 200px;
+            color: #61dafb;
+        }
+        .container {
+            height: 30px;
+            width: 250px;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            outline: none;
+            border: none;
+            box-sizing: border-box;
+            padding-left: 5px;
+            background-color: rgba(41, 45, 62, .06);
+            color: #008B8B;
+            caret-color: #008B8B;
+        }
+        input::placeholder {
+            color: #61dafb;
+        }
+
+        span {
+            position: absolute;
+            content: "";
+            display: block;
+            background-color: #008B8B;
+            transition: transform .1s ease-in-out;
+        }
+        .top,
+        .bottom {
+            left: 0px;
+            right: 0px;
+            height: 2px;
+        }
+        .left,
+        .right {
+            top: 0px;
+            bottom: 0px;
+            width: 2px;
+            transform: scaleY(0);
+        }
+        .top {
+            top: 0px;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition-delay: .2s;
+        }
+        .left {
+            left: 0px;
+            transform-origin: bottom center;
+            transition-delay: .3s;
+        }
+        .bottom {
+            bottom: 0px;
+        }
+        .right {
+            right: 0px;
+            transform-origin: top center;
+            transition-delay: .1s;
+        }
+        input:focus ~ .right {
+            transform: scaleY(1);
+            transform-origin: bottom center;
+        }
+        input:focus ~ .left {
+            transform: scaleY(1);
+            transform-origin: top center;
+        }
+        input:focus ~ .top {
+            transform: scaleY(1);
+            transform-origin: right center;
+        }
+        .container1 {
+            height: 30px;
+            width: 250px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .btn {
+            border-radius: 15px;
+            position: absolute;
+            height: 30px;
+            width: 250px;
+            left: 50%;
+            top: 54%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 5px;
+            width: 52%;
+            margin-top: 40px;
+            background-color: 	#AFEEEE;
+            color: -black;
+        }
+    </style>
+</head>
+<body>
+    <video id="video" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; " autoplay loop muted>
+            <source src="../static/背景湖.mp4" type="video/mp4">
+    </video>
+    <div class="login">
+        <form action="/login/" method="post" >
+        <div class="header">Bayes员工登录</div>
+        <div class="container">
+            <input type="text" placeholder="请输入用户名" name="user">
+            <span class="left"></span>
+            <span class="right"></span>
+            <span class="top"></span>
+            <span class="bottom"></span>
+        </div>
+        <div class="container1">
+            <input type="password" placeholder="请输入密码" name="userpw">
+            <span class="left"></span>
+            <span class="right"></span>
+            <span class="top"></span>
+            <span class="bottom"></span>
+        </div>
+            <div>
+        <input type="submit" value="登录" name="sub" class="btn" />
+            </div>
+            <div class="res_text">{{ rlt }}</div>
+            <div class="satff_text">员工的默认账号：admin1，密码：123456 admin2，密码：159846</div>
+        </form>
+
+    </div>
+
+</body>
+</html>
