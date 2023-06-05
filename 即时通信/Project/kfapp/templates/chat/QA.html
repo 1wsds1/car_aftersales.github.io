@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset = 'utf-8'>
+  <title>汽车售后客服系统</title>
+  <style>
+    body {
+      text-align: center;
+    }
+    
+  .title {
+    background-image: url("/static/img/客服系统背景图.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 250px; /* Adjust the height value as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .title h1 {
+    font-size: 60px; /* Adjust the font size as needed */
+    color: #fff;
+    }
+
+    .narrow-row {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown span {
+      cursor: pointer;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      top: 100%;
+      left: 0;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-content a {
+      color: #000;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .service-button {
+      background-color: #D6EAF8;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+    
+    .service-button:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .image-block {
+      display: inline-block;
+      width: calc(25% - 20px);
+      margin-top: 20px;
+    }
+    
+    .image-block img {
+      width: 100%;
+    }
+    
+    .image-block p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    
+    .divider {
+      margin-top: 20px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    
+    .image-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .image-block {
+      flex-basis: calc(25% - 20px);
+    }
+  </style>
+</head>
+<body>
+  <br>
+  <div class="title">
+    <h1>Bayes汽车售后客服系统</h1>
+  </div>
+  
+<style>
+  .function-block {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .function-item {
+    flex-basis: calc(25% - 5px);
+  }
+
+  .function-item:nth-child(2),
+  .function-item:nth-child(3),
+  .function-item:nth-child(4) {
+    flex-basis: calc(16.66% - 5px);
+  }
+
+  .function-item .function-content {
+    border: 2px solid #0F3057;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%;
+    left: 0;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .function-item:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    color: #000;
+    padding: 5px 0;
+    text-decoration: none;
+    display: block;
+  }
+</style>
+<div class="function-block">
+  <div class="function-item">
+    <div class="function-content">
+      <span>探索车主服务 ▼</span>
+      <div class="dropdown-content">
+        <a href="#">车主应用</a>
+        <a href="#">联系我们</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="function-item">
+    <div class="function-content">
+      <span>用车指南▼</span>
+      <div class="dropdown-content">
+        <a href="#">车主手册</a>
+        <a href="#">行车常识</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="function-item">
+    <div class="function-content">
+      <span>车主社交圈 ▼</span>
+      <div class="dropdown-content">
+        <a href="#">加入社交圈</a>
+        <a href="tb.html">社交圈动态</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="function-item">
+    <div class="function-content">
+      <span>客服咨询 ▼</span>
+      <div class="dropdown-content">
+        <a href="room.html">在线咨询</a>
+        <a href="#">热线电话</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div style="border-radius:8px;padding:15px;text-align:center;">
+  <h2>常见问题视频指南</h2>
+</div>
+
+  <div class="divider"></div>
+
+  <div class="image-row">
+    <div class="image-block">
+      <img src="/static/img/60-40分开式可折叠后排座椅靠背.jpg" alt="图片1">
+      <p>1.60-40分开式可折叠后排座椅靠背</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/LED锁车指示灯.jpg" alt="图片2">
+      <p>2.LED锁车指示灯</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/倒车传感系统.jpg" alt="图片3">
+      <p>3.倒车传感系统</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/倒车影像.jpg" alt="图片4">
+      <p>4.倒车影像</p>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="image-row">
+    <div class="image-block">
+      <img src="/static/img/电动座椅调整.jpg" alt="图片5">
+      <p>5.电动座椅调整</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/电源插座.jpg" alt="图片6">
+      <p>6.电源插座</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/方向盘的使用小窍门.jpg" alt="图片7">
+      <p>7.方向盘的使用小窍门</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/个人安全系统.jpg" alt="图片8">
+      <p>8.个人安全系统</p>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="image-row">
+    <div class="image-block">
+      <img src="/static/img/个人安全系统2.jpg" alt="图片9">
+      <p>9.个人安全系统2</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/如何保持轮胎的良好状态.jpg" alt="图片10">
+      <p>10.如何保持轮胎的良好状态</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/延长质保.jpg" alt="图片11">
+      <p>11.延长质保</p>
+    </div>
+    
+    <div class="image-block">
+      <img src="/static/img/智能充电.jpg" alt="图片12">
+      <p>12.智能充电</p>
+    </div>
+  </div>
+  
+  
+</body>
+</html>

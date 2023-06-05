@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bayes-保养规划</title>
+	<!-- <link rel="stylesheet" type="text/css" href="/static/css/uc.css"> -->
+	<style>
+		* {
+			box-sizing: border-box;
+			font-family: "黑体";
+		}
+		
+		/* body 样式 */
+		body {
+			font-family: Arial;
+			margin: 0;
+		}
+		
+		/* 标题 */
+		.header {
+			padding: 80px;
+			text-align: center;
+			background: rgb(5, 96, 169);
+			color: rgb(255, 255, 255);
+		}
+		
+		/* 标题字体加大 */
+		.header h1 {
+			font-size: 40px;
+		}
+		
+		/* 导航 */
+		.navbar {
+			overflow: hidden;
+			/* background-color: rgb(214, 213, 213); */
+			background: #eee;
+		}
+		
+		/* 导航栏样式 */
+		.navbar a {
+			float: left;
+			display: block;
+			color: rgb(0, 0, 0);
+			text-align: center;
+			padding: 14px 40px;
+			text-decoration: none;
+		}
+		
+		/* 右侧链接*/
+		.navbar a.right {
+			float: right;
+		}
+		
+		/* 鼠标移动到链接的颜色 */
+		.navbar a:hover {
+			background-color: #ddd;
+			color: black;
+		}
+		/* 列容器 */
+		.row {  
+			display: -ms-flexbox; 
+			display: flex;
+			-ms-flex-wrap: wrap; 
+			flex-wrap: wrap;
+		}
+		/*  */
+		/* 创建两个列 */
+		/* 边栏 */
+		.side {
+			-ms-flex: 40%; /* IE10 */
+			text-align: center;
+			flex: 40%;
+			background-color: #ffffff;
+			padding: 20px;
+		}
+		
+		/* 主要的内容区域 */
+		.main {   
+			-ms-flex: 60%; /* IE10 */
+			flex: 60%;
+			text-align: center;
+			background-color: white;
+			padding: 20px;
+		}
+		
+		/* 图片 */
+		.fff {
+			/* background-color: rgb(245, 245, 245); */
+			background-color: #eee;
+			text-align: left;
+			width: 100%;
+			padding: 20px;
+		}
+
+		.emphasize {
+			background-color: #ffffff;
+			text-align: center;
+			width:100%;
+			padding: 20px;
+		}
+		
+		/* 底部 */
+		.footer {
+			padding: 20px;
+			text-align: center;
+			background: #ddd;
+		}
+		/* 去下划线 */
+		a{
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h1>Bayes新能源汽车保养规划</h1>
+		<h2>只做车辆必要的保养</h2>
+		<p></p>
+	</div>
+	<div class="navbar">
+		<a href="http://127.0.0.1:8000/">售后首页</a>
+		<a href="/wxby/online_reserve">维修预约</a>
+		<a href="/wxby/history_order">历史订单</a>
+		<a href="/wxby/urgent_call">紧急呼救</a>
+		<a href="/cdgh/cdgh">充电规划</a>
+		<a href="/kf/kf_index" class="right">在线客服</a>
+	</div> 
+	<br>
+	<div class="emphasize" style="height:800px;">
+		<h3>请用爱呵护您的Bayes，记得按时回店进行车辆保养。
+			<br><br>选择Bayes售后服务，无需为保养项目和费用而担忧，我们针对不同车龄车主精心准备多项保养套餐，让您在全方位了解爱车保养周期的同时，享受更多保养折扣与会员专属优惠。
+			<br><br>买车不难，养车不贵，Bayes售后服务助力原厂定期保养，保证您长久悦享驾趣。</h3>
+			<img src="https://www.bmw.com.cn/content/dam/bmw/marketCN/common/topics/owners/aftersales/maintenance/srp/srp_1.jpg/jcr:content/renditions/cq5dam.resized.img.980.medium.time1602845190654.jpg" width="1200px" height="600px">
+	</div><br>
+	<img src="https://www.bmw.com.cn/content/dam/bmw/marketCN/bmw_com_cn/vsp/images/V1.jpg" width="1250px" height="600px">
+	<br><br>
+	<div class="row">
+		<div class="side">
+			<h2>Bayes保养服务价格</h2>
+			<p>更多驾驶乐趣，更少保养费用</p>
+			<p>您只需注册成为Bayes会员，即享保养折扣优惠：<br>
+				• 车龄3年以上会员保养费用最低8折折扣优惠；<br>
+				• 车龄7年以上会员保养费用最低7折折扣优惠。<br>
+			</p>
+			<br/>
+			<div class="fff" style="height:720px;">
+				<h3>发动机机油保养套餐：</h3>
+				• 5W系列机油保养   ¥ 1094<br/><br/>
+				• *0W系列高性能机油保养   ¥ 1399<br/><br/>
+				<h3>发动机基础保养套餐：</h3>
+				• 5W系列机油保养   ¥ 1094<br/><br/>
+				• *0W系列高性能机油保养   ¥ 1399<br/><br/>
+				• 空气滤芯保养   ¥ 387<br/><br/>
+				• 燃油滤芯保养   ¥ 632<br/><br/>
+				• 火花塞保养   ¥ 948<br/><br/>
+				<br/>
+				• 制动液保养套餐   ¥ 430<br/><br/>
+				• 雨刮片保养套餐   ¥ 458<br/><br/>
+				• 前部制动片保养套餐   ¥ 1515<br/><br/>
+				• 后部制动片保养套餐   ¥ 1484<br/><br/>
+				• 前部制动片及制动盘的保养套餐   ¥ 3626<br/><br/>
+				• 后部制动片及制动盘的保养套餐   ¥ 2953<br/><br/>
+				• 空调滤芯保养套餐   ¥ 534<br/>
+			</div>
+			<div class="emphasize">
+				<a href="/wxby/online_reserve"><h3>点此立即预约保养服务</h3></a>
+			</div>
+			<div class="fff" style="height:210px;">
+				<p><h4>* Bayes官方建议：</h4>
+					A系列发动机最迟每2年或2万公里左右及时更换原厂火花塞<br><br>
+					B系列发动机最迟每4年或4万公里左右及时更换原厂火花塞<br><br>
+					具体保养内容请咨询当地Bayes授权经销商<br><br>
+				</p>
+			</div>
+  		</div>
+		  <div class="main">
+			<h2>保养套餐介绍</h2>
+			<p>针对不同车龄和车况，<br>Bayes推出<b>发动机机油保养</b>和<b>发动机基础保养</b><br>两大发动机保养套餐。</p>
+			<div class="fff" style="height:300px;">
+				<h3>发动机机油保养：</h3>
+				<p>Bayes发动机机油保养包含机油机滤保养，即更换发动机机油及机油滤清器。<br><br>
+				原厂Bayes发动机机油具有优异的清洁性能、抗磨损性能和低温性能，能够有效减少机械磨损，延长发动机寿命。除此之外，Bayes还为装配了GPF的Bayes发动机准备了Bayes高端机油，助力全擎释放发动机活力。<br><br>
+				定期更换发动机机油和机油滤清器。能够有效激发引擎动感表现，为爱车提供持久保护。<br><br>
+				保养周期：建议最迟每1年（或每1万公里左右）保养一次。Bayes CBS系统会根据实际驾驶状况进行保养提示。<br><br>
+				</p>
+			</div>
+			<div class="emphasize">
+				<img src="https://www.bmw.com.cn/content/dam/bmw/marketCN/common/topics/owners/aftersales/maintenance/srp-package/resize_1.jpg" width="670px" height="350px">
+			</div>
+			<div class="fff" style="height:400px;">
+				<h3>发动机基础保养：</h3>
+				<p>Bayes发动机基础保养包含机油、机滤、火花塞、燃油滤芯、空气滤芯的保养和更换。<br><br>
+					<b>·</b>火花塞是汽油机点火系统的重要元件，火花塞电极在使用中会产生消耗，超过保养周期会导致电极间隙过大或电极间夹杂焦炭，造成点火困难，引起发动机动力不足、加速无力、抖动等现象；<br>
+					<b>·</b>燃油滤芯可有效过滤燃油中的杂质、水分和胶质，燃油滤芯需定期进行保养和更换，否则会影响过滤效果，导致发动机性能下降；<br>
+					<b>·</b>空气滤芯可有效拦截进气中的灰尘和污物进入发动机，并且为发动机运行提供充足的清洁空气。空气滤芯需定期进行保养，超过保养周期会导致发动机进气不足、油耗增加，严重影响发动机寿命。<br><br>
+					定期进行发动机基础保养，可长效焕活爱车心脏，激发澎湃动力，助您持续畅享纯粹驾趣。<br><br>
+					保养周期：建议最迟每2年（或每2万公里左右）保养一次。Bayes CBS系统会根据实际驾驶状况进行保养提示。<br><br>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<a class="bottom" href="#">回到顶部</a><br/>
+		<h6>本网站中的产品信息根据发布时的车辆配置状态信息编制。<br/>鉴于Bayes汽车不断对汽车进行改型和改进，因市场客观的变化，中国大陆市场实际销售车型的部分配置、规格及相关描述可能与本网站内容有所不同。<br/>具体产品以中国大陆市场实际销售为准。具体细节请咨询Bayes汽车官方直售或授权经销商。</h6>
+  		<h5>页面内容来源网络仅用于作业</h5>
+	</div>
+</body>
+</html>

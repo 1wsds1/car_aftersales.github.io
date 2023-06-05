@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bayes-紧急呼救</title>
+	<!-- <link rel="stylesheet" type="text/css" href="/static/css/uc.css"> -->
+	<style>
+		* {
+			box-sizing: border-box;
+			font-family: "黑体";
+		}
+		
+		/* body 样式 */
+		body {
+			font-family: Arial;
+			margin: 0;
+		}
+		
+		/* 标题 */
+		.header {
+			padding: 80px;
+			text-align: center;
+			background: rgb(255, 255, 255);
+			color: rgb(30, 0, 0);
+		}
+		
+		/* 标题字体加大 */
+		.header h1 {
+			font-size: 40px;
+		}
+		
+		/* 导航 */
+		.navbar {
+			overflow: hidden;
+			/* background-color: rgb(214, 213, 213); */
+			background: #ddd;
+		}
+		
+		/* 导航栏样式 */
+		.navbar a {
+			float: left;
+			display: block;
+			color: rgb(0, 0, 0);
+			text-align: center;
+			padding: 14px 40px;
+			text-decoration: none;
+		}
+		
+		/* 右侧链接*/
+		.navbar a.right {
+			float: right;
+		}
+		
+		/* 鼠标移动到链接的颜色 */
+		.navbar a:hover {
+			background-color: #ddd;
+			color: black;
+		}
+		/* 列容器 */
+		.row {  
+			display: -ms-flexbox; 
+			display: flex;
+			-ms-flex-wrap: wrap; 
+			flex-wrap: wrap;
+		}
+		/*  */
+		/* 创建两个列 */
+		/* 边栏 */
+		.side {
+			-ms-flex: 35%; /* IE10 */
+			text-align: center;
+			flex: 35%;
+			background-color: #f1f1f1;
+			padding: 20px;
+		}
+		
+		/* 主要的内容区域 */
+		.main {   
+			-ms-flex: 65%; /* IE10 */
+			flex: 65%;
+			text-align: center;
+			background-color: white;
+			padding: 25px;
+		}
+		
+		/* 图片 */
+		.fff {
+			/* background-color: rgb(245, 245, 245); */
+			background-color: #ddd;
+			text-align: left;
+			width: 100%;
+			padding: 20px;
+		}
+		
+		/* 底部 */
+		.footer {
+			padding: 20px;
+			text-align: center;
+			background: #ddd;
+		}
+		/* 去下划线 */
+		a{
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h2>Bayes新能源汽车紧急道路救援热线: 1010-6666</h2>
+		<h1>道路救援 关爱随行</h1>
+		<p></p>
+	</div>
+	<div class="navbar">
+		<a href="http://127.0.0.1:8000/">售后首页</a>
+		<a href="/wxby/online_reserve">维修预约</a>
+		<a href="/wxby/history_order">历史订单</a>
+		<a href="/wxby/by_plan">保养规划</a>
+		<a href="/cdgh/cdgh">充电规划</a>
+		<a href="/kf/kf_index" class="right">在线客服</a>
+	</div> 
+	<div class="row">
+		<div class="side">
+			<h2>我们可以为您做什么？</h2>
+			<p>致电紧急道路救援热线后，您可以获得以下帮助</p>
+			<div class="fff" style="height:330px;">
+				为您的爱车提供：<br/>---------------------------------------<br/>
+				<b>· 现场抢修</b><br/><br/>
+				我们会提供现场抢修服务，以便您的爱车可以迅速再次上路。如果现场抢修无法在45分钟内完成，我们将会拖车至距离最近的Bayes汽车授权经销商，以便您的爱车可以得到进一步妥善处理。如果发生故障的位置在您居住地的80公里内，您可以选择将车辆拖至居住地经销商。
+				<br/><br/>* 在某些特定条件下，如果我们的救援车因为需要遵循高速公路管理条例而无法到达您的身边。 救援中心会引导您联系当地交警或政府指定的拖车服务商，将车辆拖至我们的拖车准许到达的地点。我们会为您报销由此产生的合理的额外费用。
+			</div>
+			<br/>
+			<div class="fff" style="height:780px;">
+				为乘驾人员提供：<br/>---------------------------------------<br/>
+				如果您的车辆被拖至Bayes汽车授权经销商，当故障诊断 / 维修无法在4小时内或当天完成时，您可以选择：<br/><br/>
+				<b>· 继续旅行</b><br/>
+				<br/>- 出租车：出事地点距离居住地在80公里内时，从拖车之日起计算3个自然日内，总报销金额上限含税300元人民币。<br/>
+				<br/>- 同品牌代步车：出事地点距离居住地80公里以上时，您可以选择同品牌代步车（车型以店内实际情况为准） 。 借用时间为最多3个工作日 /1000 公里。 当发生交通事故、车辆被盗或蓄意被坏时，我们建议您同时第一时间联系您的保险公司。<br/>
+				<br/>- 火车：如果预计乘车时间在6小时内，将为您提供一等座火车票的免费预定服务，驾驶员及不超过4个乘客（七座车为6个乘客）均享受此项免费服务。<br/>
+				<br/>- 飞机：如果预计乘车时间超过6小时， 将为您提供经济舱机票的免费预订服务，驾驶员及不超过4个乘客（七座车为6个乘客） 均享受此项免费服务，乘客需与驾驶员到达同一地点。<br/>
+				<br/>- 酒店住宿：如果此时距离您的居住地超过80公里，您可以选择在酒店等待车辆修复。我们将为您提供最多4晚最高5星级酒店(每晚含税价格不超过850元人民币 ) 的免费住宿安排。<br/>
+				<br/>* 如果您对酒店住宿有其他要求，建议您通过道路救援热线告知工作人员，我们会尽最大努力满足您的合理要求。<br/>
+				<br/>* 驾驶员及不超过4个乘客（七座车为6个乘客）均享受此项免费服务。<br/>
+				<br/>备注：以上所述的火车、飞机、代步车或酒店住宿仅可选其中一种。<br/>
+			</div>
+			<br/>
+			<div class="fff" style="height:1160px;">
+				其他权益：<br/>---------------------------------------<br/>
+				如果是您的家人或朋友驾驶享受Bayes汽车紧急道路救援服务的车辆，他们同您一样，享受同等权益。详情请垂询紧急道路救援热线：<b>1010-6666</b><br/><br/>
+				<b>1. 取车利益</b><br/>
+				<br/>车辆维修完毕后（不含保养、升级和检测等 )，客户可自行到维修经销商取车，我们可以为客户报销交通费用（若客户不方便自行取车，我们将为您安排拖车，将车辆从维修经销商拖至客户住所），取车利益仅限1人享受。取车利益与酒店住宿、继续旅行只能选择一种。<br/>
+				<br/><b>2. 医疗建议</b><br/>
+				<br/>当以下情况发生时，您可能需要第一时间获取医院位置信息<br/>
+				<br/>- 发生交通事故时<br/>
+				<br/>- 突发疾病而影响驾驶时<br/>
+				<br/>- 需要紧急购买处方药时<br/>
+				<br/><b>3. 紧急口讯代递</b><br/>
+				<br/>当您的爱车发生了机械故障或交通事故，我们会根据您的需要给您的家人、朋友或可能因该故障或事故而对其造成延误的商业联系人代递紧急口讯。<br/>
+				<br/><b>4. 例外情况</b> - 以下情况不属于救援范围<br/>
+				<br/>- 车辆需要预约常规维修或保养时<br/>
+				- 授权经销商拨打紧急道路救援热线询问车辆维修问题<br/>
+				- 医疗救治：您在行驶途中需要医疗救治而产生的费用，需要您联系您的保险公司承担<br/>
+				- 由于战争、暴乱、叛乱、政治示威、抢劫、罢工、军事或反恐行动、地震、气候反常和大气现象造成的灾害等不可抗力造成的车辆无法行驶<br/>
+				- 由于安装非原厂配件 / 附件导致车辆无法正常行驶或者由于非Bayes汽车授权经销商维修导致车辆无法正常行驶<br/>
+				- 交通事故 / 车辆故障引起的直接或间接行李损坏或其他经济损失<br/>
+				- 出租车、警车、驾校教练车及租赁公司车辆等商用车辆，仅享受免费现场抢修和拖车服务<br/>
+				- 报案时车辆已经在Bayes汽车经销商处时<br/>
+				- 车辆参与赛车、拉力赛、速度或耐久性测试以及在非官方道路上驾驶时<br/>
+				- 车辆故障时由车主故意损坏造成的情况，或者车辆被用于犯罪行为或暴力攻击时<br/>
+				- 由于国家或政府相关机构强行介入所导致的车辆损坏<br/>
+				- 由于车主未遵守使用说明等不正确操作导致的车辆损坏<br/>
+				- 由于车辆状态在已不适于上路情况下驾驶导致的车辆损坏<br/>
+				<br/><b>5. 紧急道路救援覆盖范围</b> - 中国大陆地区<br/>
+			</div>
+			<br/>
+		</div>
+		<div class="main">
+			<h1>随时待命 为您解忧</h1>
+			<p>驾驶员及不超过4个乘客/七座车为6个乘客。<br>车辆所拖挂的房车/大篷车也包含在内。
+				<br>注：仅在法律规定房车/大篷车可以上路的城市提供此项服务。</p>
+			<div class="fff" style="height:120px;">
+				我们深知，会有一些意外不期而至。Bayes汽车为您提供的紧急道路救援服务，将在一些例如钥匙锁在车内或遗失、扎胎、燃油耗尽、加错油、蓄电池没电或车辆故障的情况发生时，为您解决这些问题。<br/>Bayes汽车紧急道路救援为您提供24小时服务，无论您的爱车停放在家中，或行驶在路上，紧急道路救援都乐于为您提供帮助。
+			</div><br/>
+			<img src="https://www.volvocars.com.cn/images/v/-/media/market-assets/china/applications/localpages/image/shouhouyemian0920/daolujiuyuan/fuwufanwei4-3.jpg?iar=0&w=1080" width="600px" height="400px">
+			<br/><br/><h1>紧急道路救援服务范围</h1>
+			<p>Bayes汽车紧急道路救援服务自购车之日起，3年有效。在中国大陆地区通过Bayes汽车或其授权经销商购买的非商用Bayes车辆，在有效期内，均享受此项免费服务。</p>
+			<div class="fff" style="height:490px;">
+				<h3>紧急道路救援服务范围：</h3>
+				• 机械或电子故障<br/>
+				<br/>• 影响安全行驶的故障如 ABS、气囊报警灯亮，机油 / 燃油泄漏、没有倒档<br/>
+				<br/>• 燃油问题：燃油耗尽、加错油或燃油污染<br/>
+				<br/>• 钥匙问题：钥匙锁在车内、遗失或损坏<br/>
+				<br/>• 轮胎问题：扎胎或爆胎<br/>
+				<br/>• 蓄电池没电<br/>
+				<br/>• 发生交通事故导致车辆无法行驶<br/>
+				<br/>• 蓄意破坏或盗窃车辆导致车辆无法行驶<br/>
+				<br/>• 车辆被盗<br/>
+				<br/>• 车辆起火<br/>
+			</div><br/>
+			<img src="https://www.volvocars.com.cn/images/v/-/media/market-assets/china/applications/localpages/image/roadside-assitance/how_to_contact43.jpg?iar=0&w=1080" width="600px" height="400px">
+			<br><br/>
+			<h1>如何联络紧急道路救援</h1>
+			<div class="fff" style="height:480px;">
+				• 请先将车停靠在安全地带，根据法规要求，放置三角警示牌<br/><br/>
+				• 确保您和车上乘客已经处于安全地带<br/><br/>
+				• 拿出提示卡（应将您的车牌号和车架号提前记录在提示卡上。如果提示卡上没有记录您的车架号，您还可以在主驾驶仪表台与前挡风玻璃间的位置查看到车架号）<br/><br/>
+				• 如果您的车辆配置了Bayes随车管家，您可以通过按下On Call按钮联络紧急道路救援<br/><br/>
+				• 如果您的车辆没有配置Bayes随车管家，请通过拨打提示卡上的紧急道路救援热线寻求帮助。<br/><br/>
+				<h4>电话接通后，请告知如下信息：</h4>
+				- 您的姓名<br/><br/>
+				- 车牌号和车架号<br/><br/>
+				- 车型及车辆颜色<br/><br/>
+				- 您的位置（尽量详细）<br/><br/>
+				- 可以联系到您的手机号码<br/>
+			</div>
+  		</div>
+	</div>
+	<div class="footer">
+		<a class="bottom" href="#">回到顶部</a><br/>
+		<h6>本网站中的产品信息根据发布时的车辆配置状态信息编制。<br/>鉴于Bayes汽车不断对汽车进行改型和改进，因市场客观的变化，中国大陆市场实际销售车型的部分配置、规格及相关描述可能与本网站内容有所不同。<br/>具体产品以中国大陆市场实际销售为准。具体细节请咨询Bayes汽车官方直售或授权经销商。</h6>
+  		<h5>页面内容来源网络仅用于作业</h5>
+	</div>
+</body>
+</html>

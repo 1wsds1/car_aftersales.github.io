@@ -1,0 +1,229 @@
+<!-- chat/templates/chat/room.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .chat_commento {
+    width: 85%;
+    height: 100vh;
+    margin: auto; /* 调整边距的数值 */
+    border-radius: 10px;
+    border: 2px solid #f4f5f7;
+    background-color: #ffffff;
+}
+    .clearfix::after{
+        content: "";
+        display: block;
+        clear: both;
+        visibility: hidden;
+    }
+    /* top */
+    .chat_top{
+        width: 100%;
+        height: 60px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-left: 20px;
+        font-size: 24px;
+        line-height: 60px;
+        text-align: center;
+        box-sizing: border-box;
+        background-color: #4459AB;
+        color: #ffffff;
+    }
+    /* middle */
+    /* 左边 */
+    .chat_middle{
+        height: calc(100% - 200px);
+        overflow: auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #e0e0e0;
+    }
+    .chat_left{
+        width: 100%;
+        height: 120px;
+        margin-top: 20px;
+    }
+    .chat_left_item_1{
+        width: 50px;
+        height: 50px;
+        background-color: #4459AB;
+        float: left;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+        line-height: 50px;
+        color: white;
+        border-radius: 25px;
+    }
+    .chat_left_item_2{
+        width: 55%;
+        height: 100px;
+        float: left;
+        margin-top: 10px;
+    }
+    .chat_left_item_2 .chat_left_chat{
+        float: left;
+    }
+    .chat_left_item_2 .chat_left_content{
+        padding: 15px;
+        margin-top: 10px;
+        background-color: #f4f5f7;
+        display: inline-block;
+        border-radius: 10px;
+        border-top-left-radius: 0px;
+    }
+    /* foot */
+    .chat_foot{
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #e0e0e0;
+        }
+    .chat_context{
+        flex: 1;
+        height: 30px;
+        padding: 5px 10px;
+        font-size: 17px;
+        outline: none;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+    }
+    .chat_commit{
+        width: 80px;
+        height: 30px;
+        color: white;
+        background-color: #4F7cff;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    .chat_context{
+        resize: none;
+    }
+    .chat_context::placeholder{
+        color: black;
+        font-weight: 500;
+    }
+    .line{
+        width: 100%;
+        border-top: 1px;
+        border-color: #f4f5f7;
+        border-style: solid;
+    }
+</style>
+<body>
+    <!-- entry -->
+    <div class="chat_commento">
+        <!-- top -->
+        <div class="chat_top">
+            Bayes新能源汽车售后
+        </div>
+        <!-- line -->
+        <div class="line"></div>
+        <!-- middle -->
+        <div class="chat_middle" id="chat_middle_item">
+            <!-- 左边 -->
+            <div class="chat_left clearfix">
+                <div class="chat_left_item_1 ">客服</div>
+                <div class="chat_left_item_2">
+                    <div class="chat_left_content">
+                        您好，请问有什么可以帮助您的吗？
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- line -->
+        <div class="line"></div>
+        <!-- foot -->
+        <div class="chat_foot">
+            <input class="chat_context" id="chat-message-input" type="text" placeholder="请输入"/>
+            <input class="chat_commit"  id="chat-message-submit" type="button" value="Send"/>
+        </div>
+</div>
+</body>
+<script>
+    var roomName = {{ room_name_json }};
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/kfapp/room' + roomName + '/');
+
+    // 成功发送
+    var send_message=document.getElementById("chat_middle_item");
+    //判断发送方
+    var i=0;
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        var date = new Date();
+        var hour = date.getHours();
+        var mm = date.getMinutes();
+        var time = hour + ':' + mm;
+        var ans = '<div class="chat_left_item_1 clearfix">顾客</div>' +
+                    '<div class="chat_left_item_2">' +
+                    '<div class="chat_time">' + time + '</div>' +
+                    '<div class="chat_left_content">' + message + '</div>' +
+                    '</div>';
+        if (i % 2 === 0) {
+        ans = '<div class="chat_left_item_1 clearfix">顾客</div>' +
+              '<div class="chat_left_item_2">' +
+              '<div class="chat_time">' + time + '</div>' +
+              '<div class="chat_left_content">' + message + '</div>' +
+              '</div>';
+        } else {
+        ans = '<div class="chat_left_item_1 clearfix">客服</div>' +
+              '<div class="chat_left_item_2">' +
+              '<div class="chat_time">' + time + '</div>' +
+              '<div class="chat_left_content">' + message + '</div>' +
+              '</div>';
+        }
+        var oLi = document.createElement("div");
+        oLi.setAttribute("class", "chat_left");
+        oLi.innerHTML = ans;
+        send_message.append(oLi);
+         i++; // 每次执行完毕后递增 i
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+
+
+
+        messageInputDom.value = '';
+    };
+</script>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>ISAD-充电规划</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <style>
+		body,
+		html,
+		#container {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			font-family: "微软雅黑";
+		}
+		.info {
+			z-index: 999;
+			width: auto;
+			min-width: 22rem;
+			padding: .75rem 1.25rem;
+			margin-left: 1.25rem;
+			position: fixed;
+			top: 1rem;
+			background-color: #fff;
+			border-radius: .25rem;
+			font-size: 14px;
+			color: #666;
+			box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+		}
+		
+		/* 标题 */
+		.header {
+			padding: 80px;
+			text-align: center;
+			background: rgb(5, 96, 169);
+			color: rgb(255, 255, 255);
+		}
+			
+		/* 标题字体加大 */
+		.header h1 {
+			font-size: 40px;
+		}
+		
+		/* 导航 */
+		.navbar {
+			overflow: hidden;
+			/* background-color: rgb(214, 213, 213); */
+			background: #ddd;
+		}
+			
+		/* 导航栏样式 */
+		.navbar a {
+			float: left;
+			display: block;
+			color: rgb(0, 0, 0);
+			text-align: center;
+			padding: 14px 40px;
+			text-decoration: none;
+		}
+			
+		/* 右侧链接*/
+		.navbar a.right {
+			float: right;
+		}
+			
+		/* 鼠标移动到链接的颜色 */
+		.navbar a:hover {
+			background-color: #ddd;
+			color: black;
+		}
+		
+		/* 图片 */
+		.fff {
+			background-color: #ffffff;
+			text-align: center;
+			width: 100%;
+			padding: 20px;
+			margin-left:auto;
+			margin-right:auto;
+		}
+
+		/* 强调说明 */
+		.emphasize {
+			background-color: #ffffff;
+			text-align: center;
+			width:100%;
+			padding: 20px;
+		}
+
+		/* 底部 */
+		.footer {
+			padding: 20px;
+			text-align: center;
+			background: #ddd;
+		}
+		
+		/* 去下划线 */
+		a{
+			text-decoration: none;
+		}
+    </style>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=bEauvGuP0FkCVCrVcQaGSpWfrwMMmSnv"></script>
+</head>
+<body>
+	<div class="header">
+		<h2>ISAD新能源汽车充电点查询</h2>
+		<p></p>
+	</div>
+	<div class="navbar">
+		<a href="http://127.0.0.1:8000/">售后首页</a>
+		<a href="/wxby/online_reserve">维修预约</a>
+		<a href="/wxby/history_order">历史订单</a>
+		<a href="/wxby/by_plan">保养规划</a>
+		<a href="/kf/kf_index" class="right">在线客服</a>
+	</div> 
+	<div class="emphasize" style="height:200px">
+		<h3>地图使用说明</h3>
+		GL地图可按住鼠标左键拖动地图, 右键控制地图旋转、修改倾斜角度。<br><br>
+		鼠标左键点击充电点查看具体信息, 右键点击充电点由当前位置进行导航。<br><br>
+		点击“定位当前位置”可进行定位, 点击“消除导航路线”可清屏。
+	</div>
+	<div class="fff" style="height:500px; width:800px"> 
+    	<div id="container"></div>
+	</div>
+	<div class="footer">
+		<h6>本网站中的地图信息来源于百度地图开放平台。充电点信息系编撰, 并非事实情况。</h6>
+  		<h5>页面内容仅用于作业</h5>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var map = new BMapGL.Map('container'); // 创建Map实例
+	map.centerAndZoom('北京市', 12); // 初始化地图,设置中心点坐标和地图级别
+	map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+
+	//定义一个控件类:消除路线导航
+	function ClearControl() {
+        this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+        this.defaultOffset = new BMapGL.Size(20, 20)
+    }
+    //通过JavaScript的prototype属性继承于BMap.Control
+    ClearControl.prototype = new BMapGL.Control();
+
+    //自定义控件必须实现自己的initialize方法，并且将控件的DOM元素返回
+    //在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
+    ClearControl.prototype.initialize = function(map) {
+		//创建一个dom元素
+		var div = document.createElement('div');
+		//添加文字说明
+		div.appendChild(document.createTextNode('消除导航路线'));
+		// 设置样式
+		div.style.cursor = "pointer";
+		div.style.padding = "7px 10px";
+		div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+		div.style.borderRadius = "5px";
+		div.style.backgroundColor = "white";
+		// 绑定事件
+		div.onclick = function(e){
+			map.clearOverlays();
+		}
+		// 添加DOM元素到地图中
+		map.getContainer().appendChild(div);
+		// 将DOM元素返回
+		return div;
+    }
+
+	var my_point = new BMapGL.Point(116.35825 , 39.98876);
+
+    //创建控件元素
+    var myClearCtrl = new ClearControl();
+    //添加到地图中
+    map.addControl(myClearCtrl);
+
+	//定义一个控件类:定位
+	function LocateControl() {
+        this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
+        this.defaultOffset = new BMapGL.Size(20, 20)
+    }
+    //通过JavaScript的prototype属性继承于BMap.Control
+	LocateControl.prototype = new BMapGL.Control();
+
+    //自定义控件必须实现自己的initialize方法，并且将控件的DOM元素返回
+    //在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
+    LocateControl.prototype.initialize = function(map) {
+		//创建一个dom元素
+		var div = document.createElement('div');
+		//添加文字说明
+		div.appendChild(document.createTextNode('定位当前位置'));
+		// 设置样式
+		div.style.cursor = "pointer";
+		div.style.padding = "7px 10px";
+		div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+		div.style.borderRadius = "5px";
+		div.style.backgroundColor = "white";
+		// 绑定事件
+		div.onclick = function(){
+			var geoLocation = new BMapGL.Geolocation();
+			geoLocation.getCurrentPosition(function (r) {
+				if(this.getStatus() == BMAP_STATUS_SUCCESS){
+					my_point = new BMapGL.Point(r.point.lng,r.point.lat);
+					var my_mark = new BMapGL.Marker(r.point);
+					map.addOverlay(my_mark);
+					map.centerAndZoom(r.point, 15);
+         			alert('您的位置:' + r.point.lng + "," + r.point.lat);
+       			}
+       			else {
+         			alert('failed' + this.getStatus());
+       			}
+     		});
+   		}
+		// 添加DOM元素到地图中
+		map.getContainer().appendChild(div);
+		// 将DOM元素返回
+		return div;
+    }
+    //创建控件元素
+    var myLocateCtrl = new LocateControl();
+    //添加到地图中
+    map.addControl(myLocateCtrl);
+
+
+	// 信息窗口1
+	var point1 = new BMapGL.Point(116.34714944305125,39.98473702509652);
+	var marker1 = new BMapGL.Marker(point1);  // 创建标注
+	map.addOverlay(marker1);              // 将标注添加到地图中
+	marker1.disableMassClear();
+	var opts1 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "知春路停车场" , // 信息窗口标题
+	    message:"知春路附近充电点"
+	}
+	var infoWindow1 = new BMapGL.InfoWindow("地址：北京市海淀区大运村路知春路地铁站F口旁", opts1);  // 创建信息窗口对象 
+	marker1.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow1, point1); //开启信息窗口
+	}); 
+	marker1.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point1;
+					transit.search(start, end);
+				});
+	
+	// 信息窗口2
+	var point2 = new BMapGL.Point(116.33984882260427,39.99986950787353);
+	var marker2 = new BMapGL.Marker(point2);  // 创建标注
+	map.addOverlay(marker2);              // 将标注添加到地图中
+	marker2.disableMassClear();
+	var opts2 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "东升大厦停车场" , // 信息窗口标题
+	    message:"五道口附近充电点"
+	}
+	var infoWindow2 = new BMapGL.InfoWindow("地址：北京市海淀区中关村东路东升大厦", opts2);  // 创建信息窗口对象 
+	marker2.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow2, point2); //开启信息窗口
+	}); 
+	marker2.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point2;
+					transit.search(start, end);
+				});
+	
+	// 信息窗口3
+	var point3 = new BMapGL.Point(116.38289971851695,39.91540809727104);
+	var marker3 = new BMapGL.Marker(point3);  // 创建标注
+	map.addOverlay(marker3);              // 将标注添加到地图中
+	marker3.disableMassClear();
+	var opts3 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "西单停车场" , // 信息窗口标题
+	    message:"西单附近充电点"
+	}
+	var infoWindow3 = new BMapGL.InfoWindow("地址：北京市西城区大秤钩胡同26号", opts3);  // 创建信息窗口对象 
+	marker3.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow3, point3); //开启信息窗口
+	}); 
+	marker3.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point3;
+					transit.search(start, end);
+				});
+	
+	// 信息窗口4
+	var point4 = new BMapGL.Point(116.27318548047585,40.15852587926105);
+	var marker4 = new BMapGL.Marker(point4);  // 创建标注
+	map.addOverlay(marker4);              // 将标注添加到地图中
+	marker4.disableMassClear();
+	var opts4 = {
+	    width : 300,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "北京航空航天大学沙河校区停车场" , // 信息窗口标题
+	    message:"沙河高教园附近充电点"
+	}
+	var infoWindow4 = new BMapGL.InfoWindow("地址：北京市昌平区北京航空航天大学沙河校区校园内", opts4);  // 创建信息窗口对象 
+	marker4.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow4, point4); //开启信息窗口
+	}); 
+	marker4.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point4;
+					transit.search(start, end);
+				});
+
+	// 信息窗口5
+	var point5 = new BMapGL.Point(116.43307940824782,39.91211527635911);
+	var marker5 = new BMapGL.Marker(point5);  // 创建标注
+	map.addOverlay(marker5);              // 将标注添加到地图中
+	marker5.disableMassClear();
+	var opts5 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "北京站停车场" , // 信息窗口标题
+	    message:"北京站附近充电点"
+	}
+	var infoWindow5 = new BMapGL.InfoWindow("地址：北京市东城区北京站西街1-1号", opts5);  // 创建信息窗口对象 
+	marker5.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow5, point5); //开启信息窗口
+	});
+	marker5.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point5;
+					transit.search(start, end);
+				}); 
+
+	// 信息窗口6
+	var point6 = new BMapGL.Point(116.38407012810232,39.87266433741573);
+	var marker6 = new BMapGL.Marker(point6);  // 创建标注
+	map.addOverlay(marker6);              // 将标注添加到地图中
+	marker6.disableMassClear();
+	var opts6 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "北京南站停车场" , // 信息窗口标题
+	    message:"北京南站附近充电点"
+	}
+	var infoWindow6 = new BMapGL.InfoWindow("地址：北京市丰台区北京南站站内停车场", opts6);  // 创建信息窗口对象 
+	marker6.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow6, point6); //开启信息窗口
+	}); 
+	marker6.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point6;
+					transit.search(start, end);
+				});
+
+	// 信息窗口7
+	var point7 = new BMapGL.Point(116.39647565540001,40.01335271394535);
+	var marker7 = new BMapGL.Marker(point7);  // 创建标注
+	map.addOverlay(marker7);              // 将标注添加到地图中
+	marker7.disableMassClear();
+	var opts7 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "亚洲金融大厦停车场" , // 信息窗口标题
+	    message:"奥林匹克森林公园附近充电点"
+	}
+	var infoWindow7 = new BMapGL.InfoWindow("地址：北京市朝阳区科荟南路辅路", opts7);  // 创建信息窗口对象 
+	marker7.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow7, point7); //开启信息窗口
+	});
+	marker7.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point7;
+					transit.search(start, end);
+				});
+	
+	// 信息窗口8
+	var point8 = new BMapGL.Point(116.4867076981541,39.993721823071354);
+	var marker8 = new BMapGL.Marker(point8);  // 创建标注
+	map.addOverlay(marker8);              // 将标注添加到地图中
+	marker8.disableMassClear();
+	var opts8 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "望京南停车场" , // 信息窗口标题
+	    message:"望京南附近充电点"
+	}
+	var infoWindow8 = new BMapGL.InfoWindow("地址：北京市朝阳区广顺南大街", opts8);  // 创建信息窗口对象 
+	marker8.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow8, point8); //开启信息窗口
+	}); 
+	marker8.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point8;
+					transit.search(start, end);
+				});
+
+	// 信息窗口9
+	var point9 = new BMapGL.Point(116.41356068881676,39.933956306317604);
+	var marker9 = new BMapGL.Marker(point9);  // 创建标注
+	map.addOverlay(marker9);              // 将标注添加到地图中
+	marker9.disableMassClear();
+	var opts9 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "中航工业停车场" , // 信息窗口标题
+	    message:"东四附近充电点"
+	}
+	var infoWindow9 = new BMapGL.InfoWindow("地址：北京市东城区亮果厂胡同16号", opts9);  // 创建信息窗口对象 
+	marker9.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow9, point9); //开启信息窗口
+	}); 
+	marker9.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point9;
+					transit.search(start, end);
+				});
+
+	// 信息窗口10
+	var point10 = new BMapGL.Point(116.50600597560707,39.82434867810926);
+	var marker10 = new BMapGL.Marker(point10);  // 创建标注
+	map.addOverlay(marker10);              // 将标注添加到地图中
+	marker10.disableMassClear();
+	var opts10 = {
+	    width : 200,     // 信息窗口宽度
+	    height: 100,     // 信息窗口高度
+	    title : "亦庄停车场" , // 信息窗口标题
+	    message:"亦庄附近充电点"
+	}
+	var infoWindow10 = new BMapGL.InfoWindow("地址：北京市朝阳区X007(东马路)", opts10);  // 创建信息窗口对象 
+	marker10.addEventListener("click", function(){          
+		map.openInfoWindow(infoWindow10, point10); //开启信息窗口
+	}); 
+	marker10.addEventListener('rightclick',function(){
+		// 驾驶导航
+		var output = "从当前位置到目的充电点驾车需要";
+			var searchComplete = function (results){
+				if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+					return ;
+				}
+				var plan = results.getPlan(0);
+					output += plan.getDuration(true) + "\n";                //获取时间
+					output += "总路程为：" ;
+					output += plan.getDistance(true) + "\n";             //获取距离
+				}
+				var transit = new BMapGL.DrivingRoute(map, {renderOptions: {map: map},
+					onSearchComplete: searchComplete,
+					onPolylinesSet: function(){        
+						setTimeout(function(){alert(output)},"1000");
+					}});
+					var start = my_point;
+					// var start = new BMapGL.Point(116.35825 , 39.98876);
+					var end = point10;
+					transit.search(start, end);
+				});
+
+</script>

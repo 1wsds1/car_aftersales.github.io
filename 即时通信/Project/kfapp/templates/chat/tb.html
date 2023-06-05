@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bayes车主社交圈</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      background-image: url("/static/img/社交圈背景图.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 300px;
+      line-height: 300px;
+      color: #fff;
+      font-size: 60px;
+    }
+    
+    .comment-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .comment {
+      margin-bottom: 20px;
+    }
+    
+    .comment .user {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    
+    .comment .user img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    .comment .timestamp {
+      font-size: 0.8em;
+      color: #888;
+    }
+    
+    .comment .content {
+      margin-top: 5px;
+    }
+    
+    .comment .image {
+      margin-top: 10px;
+      max-width: 100%;
+    }
+    
+    .comment .actions {
+      margin-top: 10px;
+    }
+    
+    .comment .actions button {
+      margin-right: 10px;
+    }
+    
+    .comment .actions button .count {
+      margin-left: 5px;
+      color: #888;
+    }
+    
+    .comment .comment-input {
+      margin-top: 10px;
+    }
+    
+    .comment .comment-input textarea {
+      width: 100%;
+      height: 60px;
+    }
+    
+    .comment .comment-input button {
+      margin-top: 10px;
+    }
+    
+    .comment .comment-list {
+      margin-top: 10px;
+    }
+    
+    .comment .comment-list .comment-item {
+      margin-top: 10px;
+      padding-left: 20px;
+      border-left: 2px solid #ccc;
+    }
+    
+    .comment .comment-list .comment-item .user {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    
+    .comment .comment-list .comment-item .user img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    .comment .comment-list .comment-item .content {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bayes车主社交圈</h1>
+  
+  <div class="comment-container">
+    <div class="comment">
+      <div class="user">
+        <img src="/static/img/用户1.jpg" alt="用户1的头像">
+        长白
+      </div>
+      <div class="timestamp">2023-05-30 10:30</div>
+      <div class="content">这是一个很棒的商品！</div>
+      <img class="image" src="/static/img/汽车1.jpg" alt="用户1的图片">
+      <div class="actions">
+        <button onclick="increaseCount(this)">
+          赞<span class="count">342</span>
+        </button>
+        <button onclick="increaseCount(this)">
+          踩<span class="count">0</span>
+        </button>
+        <button onclick="increaseCommentCount(this)">转发<span class="count">23</span></button>
+      </div>
+      <div class="comment-list">
+        <div class="comment-item">
+          <div class="user">
+            <img src="/static/img/用户4.jpg" alt="用户4的头像">
+            WSDS-123-
+          </div>
+          <div class="timestamp">2023-05-30 10:40</div>
+          <div class="content">这个商品确实非常好！</div>
+        </div>
+        <div class="comment-item">
+          <div class="user">
+            <img src="/static/img/用户5.jpg" alt="用户5的头像">
+            小生有礼
+          </div>
+          <div class="timestamp">2023-05-30 10:35</div>
+          <div class="content">我也买了这个商品，很满意！</div>
+        </div>
+      </div>
+      <div class="comment-input">
+        <textarea placeholder="请输入评论"></textarea>
+        <button onclick="addComment(this)">发表评论</button>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="user">
+        <img src="/static/img/用户2.jpg" alt="用户2的头像">
+        buaaxjw1028
+      </div>
+      <div class="timestamp">2023-05-30 12:15</div>
+      <div class="content">我也觉得这个商品非常好！</div>
+      <img class="image" src="/static/img/汽车4.jpg" alt="用户2的图片">
+      <div class="actions">
+        <button onclick="increaseCount(this)">
+          赞<span class="count">233</span>
+        </button>
+        <button onclick="increaseCount(this)">
+          踩<span class="count">0</span>
+        </button>
+        <button onclick="increaseCommentCount(this)">转发<span class="count">11</span></button>
+      </div>
+      <div class="comment-list">
+        <div class="comment-item">
+          <div class="user">
+            <img src="/static/img/用户6.jpg" alt="用户6的头像">
+            -Z-
+          </div>
+          <div class="timestamp">2023-05-30 12:25</div>
+          <div class="content">同意！这个商品真的不错。</div>
+        </div>
+        <div class="comment-item">
+          <div class="user">
+            <img src="/static/img/用户7.jpg" alt="用户7的头像">
+            ChouSeisei
+          </div>
+          <div class="timestamp">2023-05-30 12:20</div>
+          <div class="content">我也想买一个，能分享一下购买链接吗？</div>
+        </div>
+      </div>
+      <div class="comment-input">
+        <textarea placeholder="请输入评论"></textarea>
+        <button onclick="addComment(this)">发表评论</button>
+      </div>
+    </div>
+        <div class="comment">
+      <div class="user">
+        <img src="/static/img/用户8.jpg" alt="用户2的头像">
+        rous159357
+      </div>
+      <div class="timestamp">2023-05-31 14:15</div>
+      <div class="content">Bayes可以算国内的互联网造车的领头羊，而且在国内电动SUV领域目前绝对的头把交椅，其理念和宗旨都很有创造性，产品也很契合国内中层消费者的观念。如果说有哪个造车企业最有可能成为国家新能源出行战略超车者的话，那我觉得一定是能活下去的bayes。</div>
+      <img class="image" src="/static/img/汽车7.jpg" alt="用户8的图片">
+      <div class="actions">
+        <button onclick="increaseCount(this)">
+          赞<span class="count">233</span>
+        </button>
+        <button onclick="increaseCount(this)">
+          踩<span class="count">0</span>
+        </button>
+        <button onclick="increaseCommentCount(this)">转发<span class="count">11</span></button>
+      </div>
+      <div class="comment-list">
+        <div class="comment-item">
+          <div class="user">
+            <img src="/static/img/用户9.jpg" alt="用户9的头像">
+            CT
+          </div>
+          <div class="timestamp">2023-05-31 14:20</div>
+          <div class="content">楼下有啥问题啊</div>
+        </div>
+        <div class="comment-item">
+          <div class="user">
+            <img src="/static/img/用户10.jpg" alt="用户10的头像">
+            幼鸟指南
+          </div>
+          <div class="timestamp">2023-05-31 14:15</div>
+          <div class="content">我倒是有一点问题</div>
+        </div>
+      </div>
+      <div class="comment-input">
+        <textarea placeholder="请输入评论"></textarea>
+        <button onclick="addComment(this)">发表评论</button>
+      </div>
+    </div>
+    <div style="width: 100%; text-align: center; margin-top: 20px;">
+    <div style="width: 200px; height: 50px; background-color: #4CAF50; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+    <p style="color: #fff; font-weight: bold;">点击展开更多评论</p>
+    </div>
+    </div>
+    <!-- 添加更多评论... -->
+  </div>
+
+    <script>
+    function addComment(button) {
+      var commentInput = button.previousElementSibling;
+      var commentText = commentInput.value;
+      commentInput.value = "";
+
+      var commentItem = document.createElement("div");
+      commentItem.classList.add("comment-item");
+
+      var user = document.createElement("div");
+      user.classList.add("user");
+      user.innerHTML = `
+        <img src="/static/img/用户3.jpg" alt="用户3的头像">
+        脸脸家
+      `;
+      commentItem.appendChild(user);
+
+      var timestamp = document.createElement("div");
+      timestamp.classList.add("timestamp");
+      var now = new Date();
+      var timestampText = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes();
+      timestamp.textContent = timestampText;
+      commentItem.appendChild(timestamp);
+
+      var content = document.createElement("div");
+      content.classList.add("content");
+      content.textContent = commentText;
+      commentItem.appendChild(content);
+
+      var parentComment = button.parentNode.parentNode;
+      var commentList = parentComment.querySelector(".comment-list");
+      commentList.insertBefore(commentItem, commentList.firstChild);
+
+      var commentInputContainer = parentComment.querySelector(".comment-input");
+      parentComment.insertBefore(commentInputContainer, commentList.nextElementSibling);
+
+      increaseCommentCount(button);
+    }
+
+    function increaseCount(button) {
+      var countSpan = button.querySelector(".count");
+      var count = parseInt(countSpan.textContent);
+      count++;
+      countSpan.textContent = count;
+    }
+
+    function increaseCommentCount(button) {
+      var countSpan = button.querySelector(".count");
+      var count = parseInt(countSpan.textContent);
+      count++;
+      countSpan.textContent = count;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>ISAD-在线预约</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				font-family: "黑体";
+			}
+			
+			/* body 样式 */
+			body {
+				font-family: Arial;
+				margin: 0;
+			}
+			
+			/* 标题 */
+			.header {
+				padding: 80px;
+				text-align: center;
+				background: rgb(5, 96, 169);
+				color: rgb(255, 255, 255);
+			}
+			
+			/* 标题字体加大 */
+			.header h1 {
+				font-size: 40px;
+			}
+			
+			/* 导航 */
+			.navbar {
+				overflow: hidden;
+				/* background-color: rgb(214, 213, 213); */
+				background: #eee;
+			}
+			
+			/* 导航栏样式 */
+			.navbar a {
+				float: left;
+				display: block;
+				color: rgb(0, 0, 0);
+				text-align: center;
+				padding: 14px 40px;
+				text-decoration: none;
+			}
+
+			/* 右侧链接*/
+			.navbar a.right {
+				float: right;
+			}
+				
+			/* 鼠标移动到链接的颜色 */
+			.navbar a:hover {
+				background-color: #ddd;
+				color: black;
+			}
+			/* 图片 */
+			.fff {
+				background-color: #eee;
+				text-align: center;
+				width: 100%;
+				padding: 20px;
+				margin-left:auto;
+				margin-right:auto;
+			}
+
+			/* 强调说明 */
+			.emphasize {
+				background-color: #ffffff;
+				text-align: center;
+				width:100%;
+				padding: 20px;
+			}
+
+			/* 底部 */
+			.footer {
+				padding: 20px;
+				text-align: center;
+				background: #ddd;
+			}
+			
+			/* 去下划线 */
+			a{
+				text-decoration: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header">
+			<h2>ISAD维修保养在线预约</h2>
+			<p></p>
+		</div>
+		<div class="navbar">
+			<a href="http://127.0.0.1:8000/">售后首页</a>
+			<a href="/wxby/history_order">历史订单</a>
+			<a href="/wxby/by_plan">保养规划</a>
+			<a href="/cdgh/cdgh">充电规划</a>
+			<a href="/kf/kf_index" class="right">在线客服</a>
+		</div>
+		<div class="emphasize" style="height:auto">
+			<h3>在线预约使用说明</h3>
+			提交预约申请, 请在点击提交键后, 在确认页面点击确认提交, 方可成功提交。<br><br>
+			申请提交成功后, 工作人员会在工作时间通过电话尽快与您确认相关细节。<br><br>
+			感谢您对我们工作的支持与配合。<br>
+		</div>
+		<div class="fff" style="height:auto; width:700px"> 
+			<form action=or.php method="post">
+				<p>请输入您的用户名:<input type="text" name="user_name" id="user_name" /></p><br>
+				<p>请选择预约类型(维修/保养):
+					<select name="apply_type" style="font-family: 黑体; width:80px;height:30px; text-align: center;">
+						<option value="维修">维修</option>
+						<option value="保养">保养</option>
+					</select>
+				</p><br>
+				<p>请描述您的维修/保养具体需求:<br><br>
+					<textarea name="apply_content" id="apply_content" cols="80" rows="15"></textarea><br>
+				</p>
+				<p><br>
+				<a href="" onclick="return confirmInfo()"><input type="submit" style="font-family: 黑体; width:60px; height:30px"></a>
+			</form>
+		</div><br><br>
+		<div class="footer">
+			  <h5>页面内容仅用于作业</h5>
+		</div>
+	</body>
+</html>
+<script>
+	function confirmInfo(){
+		if(document.getElementById("user_name").value==''){
+			alert("请输入您的用户名");
+			return false;
+		}
+		if(document.getElementById("apply_content").value==''){
+			alert("请输入维修/保养需求！");
+			return false;
+		}
+		const r = confirm("确认提交？");
+        if (r) {
+            alert("已提交");
+            return true;
+        }
+        return false;
+	}
+</script>

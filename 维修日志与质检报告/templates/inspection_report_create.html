@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+  <title>新能源汽车售后管理信息系统</title>
+    <link rel="stylesheet" href="../static/IDetail-1.css"/>
+  <link rel="stylesheet" href="../static/IDetail-2.css"/>
+  <link rel="stylesheet" href="../static/IDetail-3.css"/>
+  <link rel="stylesheet" href="../static/IDetail-4.css"/>
+  <link rel="stylesheet" href="../static/IDetail-5.css"/>
+    <style>
+    * {
+  box-sizing: border-box;
+      }
+    body {
+    margin: 0;
+      }
+    #home{
+    background-image:url(../static/网页结构.png);
+      }
+    .btn {
+            border-radius: 15px;
+            position: absolute;
+            height: auto;
+            width: 25px;
+            left: 50%;
+            bottom: 14%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 5px;
+            width: 25%;
+            margin-top: 40px;
+            background-color: 	#AFEEEE;
+            color: -black;
+        }
+     </style>
+</head>
+
+
+
+<body>
+  <div>
+    <header data-wow-duration="0.75s" data-wow-delay="0s" class="header-area header-sticky wow slideInDown">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <!-- ***** Logo Start ***** -->
+              <a href="index.html" class="logo"></a>
+              <!-- ***** Logo End ***** -->
+              <!-- ***** Menu Start ***** -->
+              <ul class="nav">
+                <li class="scroll-to-section">
+                  <a href="index.html" class="active">主页</a>
+                </li>
+                <li class="scroll-to-section">
+                  <a href="index.html">员工主页</a>
+                </li>
+                <li class="scroll-to-section">
+                  <a href="index.html">质检报告</a>
+                </li>
+                <li class="scroll-to-section">
+                  <a href="index.html">维修订单</a>
+                </li>
+                <li class="scroll-to-section">
+                  <a href="#blog">热门话题</a>
+                </li>
+                <li class="scroll-to-section">
+                </li>
+                <li class="scroll-to-section">
+                  <div class="border-first-button">
+                  </div>
+                </li>
+              </ul>
+              <a class="menu-trigger"><span>Menu</span></a>
+              <!-- ***** Menu End ***** -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+    <div id="services" class="services section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div data-wow-duration="1s" data-wow-delay="0.5s" class="section-heading wow fadeInDown">
+              <h4>用户订单查询查询
+                <em>Important</em>
+              </h4>
+              <div class="line-dec">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="naccs">
+              <div class="grid">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="menu">
+                      <div class="first-thumb active">
+                        <div class="thumb">
+                          <span class="icon"><img src="../static/网页结构.png" alt=""/></span>
+                        </div>
+                      </div>
+
+                      <div class="last-thumb">
+                        <div class="thumb">
+                          <span class="icon"><img src="../static/网页结构.png" alt=""/></span>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <ul class="nacc">
+                      <li class="active">
+                        <div>
+                          <div class="thumb">
+                            <div class="row">
+                              <div class="col-lg-6 align-self-center">
+                                <div class="left-text">
+                                  <h4>质检报告提交 ; Daily Reports
+                                  </h4>
+                                </div>
+                              </div>
+                              <form method="post">
+                                {% csrf_token %}
+                                <div>  {{ form.as_p }} </div>
+                                    <div><input type="submit" value="Create Report"  class="btn" ></input></div>
+                              </form>
+                              <p>备注
+                              </p>
+                              <div class="row">
+                                <div class="cell">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="blog" class="blog">
+      <div class="container">
+        <div class="row">
+          <div data-wow-duration="1s" data-wow-delay="0.3s" class="col-lg-4 offset-lg-4 wow fadeInDown">
+            <div class="section-heading">
+              <h6>用户都在关心上什么
+              </h6>
+              <h4>热门话题
+                <em>快速一览</em>
+              </h4>
+              <div class="line-dec">
+              </div>
+            </div>
+          </div>
+          <div data-wow-duration="1s" data-wow-delay="0.3s" class="col-lg-6 show-up wow fadeInUp">
+            <div class="blog-post">
+              <div class="thumb">
+                <img src="https://template-1253409072.cos.ap-guangzhou.myqcloud.com/html-template/htmlpage_568_digimedia/assets/images/blog-post-01.jpg" alt=""/>
+              </div>
+              <div class="down-content">
+                <span class="category">高赞热评</span>
+                <span class="date">03/05/2023</span>
+                <a href="#"><h4>新能源汽车怎么充电快
+                  一个重要的问题
+                  </h4></a>
+                <p>想要一辆车充电最快的最好方法就是找到一种能替代电池的高能量替代品，比如说石油
+                </p>
+                <span class="author"><img src="https://template-1253409072.cos.ap-guangzhou.myqcloud.com/html-template/htmlpage_568_digimedia/assets/images/author-post.jpg" alt=""/> 妙论派之光</span>
+                <div class="border-first-button">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-wow-duration="1s" data-wow-delay="0.3s" class="col-lg-6 wow fadeInUp">
+            <div class="blog-posts">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="post-item">
+                    <div class="thumb">
+                      <a href="#"><img src="https://template-1253409072.cos.ap-guangzhou.myqcloud.com/html-template/htmlpage_568_digimedia/assets/images/blog-post-02.jpg" alt=""/></a>
+                    </div>
+                    <div class="right-content">
+                      <span class="date">03/05/2023</span>
+                      <a href="#"><h4>充电的人智商都不高
+                        </h4></a>
+                      <p>让我们来点高智商充电法
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="post-item">
+                    <div class="thumb">
+                      <a href="#"><img src="https://template-1253409072.cos.ap-guangzhou.myqcloud.com/html-template/htmlpage_568_digimedia/assets/images/blog-post-03.jpg" alt=""/></a>
+                    </div>
+                    <div class="right-content">
+                      <span class="date">03/05/2023</span>
+                      <a href="#"><h4>2023年怎么买车靠谱
+                        </h4></a>
+                      <p>省流，别买
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="post-item last-post-item">
+                    <div class="thumb">
+                      <a href="#"><img src="https://template-1253409072.cos.ap-guangzhou.myqcloud.com/html-template/htmlpage_568_digimedia/assets/images/blog-post-04.jpg" alt=""/></a>
+                    </div>
+                    <div class="right-content">
+                      <span class="date">03/05/2023</span>
+                      <a href="#"><h4>EVA
+                        </h4></a>
+                      <p>分头计划
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+
+    </footer>
+    <!-- Scripts -->
+    <script src="../static/IDetail-1.js"></script>
+    <script src="../static/IDetail-2.js"></script>
+    <script src="../static/IDetail-3.js"></script>
+    <script src="../static/IDetail-4.js"></script>
+    <script src="../static/IDetail-5.js"></script>
+    <script src="../static/IDetail-6.js"></script>
+
+  </div>
+</body>
