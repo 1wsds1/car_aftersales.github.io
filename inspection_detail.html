@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inspection Detail</title>
+</head>
+<body>
+    <h1>Inspection Detail</h1>
+    <ul>
+        {% for inspection in inspections %}
+            <li>{{ inspection.ins_id }} - {{ inspection.order_id }} - {{ inspection.ins_result }} - {{ inspection.ins_content }} - {{ inspection.ins_time }}</li>
+        {% empty %}
+            <li>No inspections available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
